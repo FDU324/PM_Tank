@@ -20,18 +20,20 @@ public class ShooterController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		#if UNITY_IOS || UNITY_ANDROID
+        	float v = CrossPlatformInputManager.GetAxisRaw("RotateV_Mobile");
+        	tank.CannonRotate(v);
+        	float h = CrossPlatformInputManager.GetAxisRaw("RotateH_Mobile");
+        	tank.TowerRotate(h);
+		#endif
         
-        float v = CrossPlatformInputManager.GetAxisRaw("RotateV_Mobile");
-        tank.CannonRotate(v);
-        float h = CrossPlatformInputManager.GetAxisRaw("RotateH_Mobile");
-        tank.TowerRotate(h);
+		#if UNITY_STANDALONE
+        	float v = Input.GetAxis("RotateV");
+        	tank.CannonRotate(v);
+        	float h = Input.GetAxis("RotateH");
+        	tank.TowerRotate(h);
+		#endif
         
-        /*
-        float v = Input.GetAxis("RotateV");
-        tank.CannonRotate(v);
-        float h = Input.GetAxis("RotateH");
-        tank.TowerRotate(h);
-        */
         
         tank.ShooterViewFieldChange(bar.value);
 

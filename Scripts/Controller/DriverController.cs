@@ -13,25 +13,26 @@ public class DriverController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-        float moveH = CrossPlatformInputManager.GetAxisRaw("MoveH_Mobile");
-        float moveV = CrossPlatformInputManager.GetAxisRaw("MoveV_Mobile");
-        tank.TankMove(moveV);
-        tank.TankRotate(moveH);        //根据玩家在水平和垂直轴上的输入，调整玩家的位移
-        float cameraH = CrossPlatformInputManager.GetAxisRaw("CameraH_Mobile");
-        float cameraV = CrossPlatformInputManager.GetAxisRaw("CameraV_Mobile");
-        tank.DriverCameraRotate(cameraH, cameraV);       //根据玩家在水平和垂直轴上的输入，调整玩家视角	
-        /*
-        
-        float moveH = Input.GetAxis("Horizontal");
-        float moveV = Input.GetAxis("Vertical");
-        tank.TankMove(moveV);
-        tank.TankRotate(moveH);
+		#if UNITY_IOS || UNITY_ANDROID
+        	float moveH = CrossPlatformInputManager.GetAxisRaw("MoveH_Mobile");
+        	float moveV = CrossPlatformInputManager.GetAxisRaw("MoveV_Mobile");
+        	tank.TankMove(moveV);
+        	tank.TankRotate(moveH);        //根据玩家在水平和垂直轴上的输入，调整玩家的位移
+        	float cameraH = CrossPlatformInputManager.GetAxisRaw("CameraH_Mobile");
+        	float cameraV = CrossPlatformInputManager.GetAxisRaw("CameraV_Mobile");
+        	tank.DriverCameraRotate(cameraH, cameraV);       //根据玩家在水平和垂直轴上的输入，调整玩家视角	
+		#endif
 
-        float cameraH = Input.GetAxis("CameraH");
-        float cameraV = Input.GetAxis("CameraV");
-        tank.DriverCameraRotate(cameraH, cameraV);
-        */
+		#if UNITY_STANDALONE
+        	float moveH = Input.GetAxis("Horizontal");
+        	float moveV = Input.GetAxis("Vertical");
+        	tank.TankMove(moveV);
+        	tank.TankRotate(moveH);
+
+        	float cameraH = Input.GetAxis("CameraH");
+        	float cameraV = Input.GetAxis("CameraV");
+        	tank.DriverCameraRotate(cameraH, cameraV);
+		#endif
     }
 
 }
